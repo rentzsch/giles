@@ -1,0 +1,1 @@
+NOTE: You need to `git clone` this repo and run it locally until I add JSONP support to DBSlayer (which I may never do -- sounds like a bad idea since DBSlayer stuff should never be exposed publicly).
