@@ -1,1 +1,90 @@
-hello <b>world</b>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<title>giles</title>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function(){
+		$('#execute').click(function(){
+			var	host = $('#host').val(),
+				port = $('#port').val(),
+				queryText = $('#query').val(),
+				queryRecord = {SQL:queryText},
+				queryJSON = JSON.stringify(queryRecord),
+				escapedQueryJSON = escape(queryJSON.replace(/ /g,"+")),
+				url = 'http://'+host+':'+port+'/db?'+escapedQueryJSON;
+			console.log('queryText',queryText);
+			console.log('queryRecord',queryRecord);
+			console.log('queryJSON',queryJSON);
+			console.log('escapedQueryJSON',escapedQueryJSON);
+			console.log('host',host);
+			console.log('port',port);
+			console.log('url',url);
+			
+			$.ajax({
+				url: url,
+				dataType: 'text',
+				success: function(data, successCode, xhr) {
+					$('#error').empty();
+					console.log('ajax.success data',data);
+					$('#result').text(data);
+				},
+				error: function (xhr, msg, exception){
+					$('#error').text('ERROR: '+msg);
+				}
+			});
+		});		
+		$(document).ajaxStart(function(){
+			$('#spinner').show();
+		});
+		$(document).ajaxStop(function(){
+			$('#spinner').hide();
+		});
+	});
+	</script>
+	<style type="text/css">
+	body {
+		font-family: sans-serif;
+	}
+	div {
+		margin-bottom: 1em;
+	}
+	input[type="text"], #query, #result {
+		font-family: Monaco, 'Courier New', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', monospace;
+	}
+	#error {
+		color: red;
+	}
+	#result {
+		font-size: 11px;
+		background-color: #eee;
+	}
+	#spinner {
+		display: none;
+	}
+	</style>
+</head>
+<body>
+	<form action="#">
+		<div>
+			Giles — a simple ajax frontend to <a href="http://code.nytimes.com/projects/dbslayer">DBSlayer</a>
+		</div>
+		<div style="font-size:smaller">
+			Host: <input type="text" id="host" value="192.168.73.133">
+			Port: <input type="text" id="port" value="9090" size="4">
+		</div>
+		<div>
+			Query:<br>
+			<textarea id="query" rows="10" cols="80">use mysql;select name from help_topic;</textarea><br>
+			<input type="button" id="execute" value="Execute">
+			<img src="spinner.gif" alt="" id="spinner"><br>
+		</div>
+		<div id="error"></div>
+		<div>
+			Result:<br>
+			<div id="result"></div>
+		</div>
+	</form>
+</body>
+</html>
