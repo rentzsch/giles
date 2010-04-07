@@ -26,11 +26,12 @@
 				url: url,
 				dataType: 'text',
 				success: function(data, successCode, xhr) {
+					console.log('ajax.success', data, successCode, xhr);
 					$('#error').empty();
-					console.log('ajax.success data',data);
 					$('#result').text(data);
 				},
 				error: function (xhr, msg, exception){
+					console.log('ajax.error ', xhr, msg, exception);
 					$('#error').text('ERROR: '+msg);
 				}
 			});
