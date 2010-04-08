@@ -6,6 +6,7 @@
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
 	<script type="text/javascript">
 	$(document).ready(function(){
+		$('#host').val(document.domain.length ? document.domain : 'localhost');
 		$('#execute').click(function(){
 			var	host = $('#host').val(),
 				port = $('#port').val(),
@@ -14,13 +15,16 @@
 				queryJSON = JSON.stringify(queryRecord),
 				escapedQueryJSON = escape(queryJSON.replace(/ /g,"+")),
 				url = 'http://'+host+':'+port+'/db?'+escapedQueryJSON;
-			console.log('queryText',queryText);
-			console.log('queryRecord',queryRecord);
-			console.log('queryJSON',queryJSON);
-			console.log('escapedQueryJSON',escapedQueryJSON);
-			console.log('host',host);
-			console.log('port',port);
-			console.log('url',url);
+			
+			if (false) {
+				console.log('queryText',queryText);
+				console.log('queryRecord',queryRecord);
+				console.log('queryJSON',queryJSON);
+				console.log('escapedQueryJSON',escapedQueryJSON);
+				console.log('host',host);
+				console.log('port',port);
+				console.log('url',url);
+			}
 			
 			$.ajax({
 				url: url,
@@ -72,7 +76,7 @@
 			Giles — a simple ajax frontend to <a href="http://code.nytimes.com/projects/dbslayer">DBSlayer</a>
 		</div>
 		<div style="font-size:smaller">
-			Host: <input type="text" id="host" value="192.168.73.133">
+			Host: <input type="text" id="host">
 			Port: <input type="text" id="port" value="9090" size="4">
 		</div>
 		<div>
