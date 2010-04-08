@@ -16,21 +16,10 @@
 				escapedQueryJSON = escape(queryJSON.replace(/ /g,"+")),
 				url = 'http://'+host+':'+port+'/db?'+escapedQueryJSON;
 			
-			if (false) {
-				console.log('queryText',queryText);
-				console.log('queryRecord',queryRecord);
-				console.log('queryJSON',queryJSON);
-				console.log('escapedQueryJSON',escapedQueryJSON);
-				console.log('host',host);
-				console.log('port',port);
-				console.log('url',url);
-			}
-			
 			$.ajax({
 				url: url,
 				dataType: 'text',
 				success: function(data, successCode, xhr) {
-					console.log('ajax.success', data, successCode, xhr);
 					$('#error').empty();
 					$('#result').text(data);
 				},
